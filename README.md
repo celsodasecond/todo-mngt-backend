@@ -2,8 +2,8 @@
 
 ## What is this Project ?
 
-The concept behind this app is to study Spring Boot with Spring Web, Lombok, Spring Data JPA, and Spring Security.
-
+The concept behind this app is to study Spring Boot with Spring Web, Lombok, Spring Data JPA, and Spring Security. This
+project also utilized [Model Mapper](https://modelmapper.org/getting-started/) to convert JPA Entity to DTO.
 
 ## Want to get the boilerplate ?
 
@@ -13,8 +13,7 @@ The concept behind this app is to study Spring Boot with Spring Web, Lombok, Spr
 
 ### API Endpoint
 
-#### 
-
+####    
 
 ### Dependencies
 
