@@ -19,6 +19,7 @@ project also utilized [Model Mapper](https://modelmapper.org/getting-started/) t
 - **@GET: /api/todos/{todoId}**: get a specific todo.
 - **@GET: /api/todos**: get all todos
 - **@PUT: /api/todos/{todoId}**: update specific todo by id.
+- **@PATCH: /api/todos/{todoId}**: updates the 'completed' status of the todo/task.
 
 ### Dependencies
 
