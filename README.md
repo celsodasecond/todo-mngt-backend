@@ -16,7 +16,9 @@ project also utilized [Model Mapper](https://modelmapper.org/getting-started/) t
 #### Todos
 
 - **@POST: /api/todos/add**: add a todo with fields "title", "description", and "completed" required.
-- 
+- **@GET: /api/todos/{todoId}**: get a specific todo.
+- **@GET: /api/todos**: get all todos
+- **@PUT: /api/todos/{todoId}**: update specific todo by id.
 
 ### Dependencies
 
