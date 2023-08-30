@@ -9,12 +9,16 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class TodoServiceImpl implements TodoService {
 
     private TodoRepository todoRepository;
     private ModelMapper modelMapper;
+
     @Override
     public TodoDto addTodo(TodoDto todoDto) {
         // This single line converts TodoDTO to TodoEntity Object.
@@ -34,5 +38,14 @@ public class TodoServiceImpl implements TodoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Todo not found with id: " + todoId));
 
         return modelMapper.map(todo, TodoDto.class);
+    }
+
+    @Override
+    public List<TodoDto> getAllTodo() {
+        List<Todo> todos = todoRepository.findAll();
+
+        List<TodoDto> todoDtos = todos.stream().map((todo) -> modelMapper.map(todo, TodoDto.class)).toList();
+
+        return todoDtos;
     }
 }
