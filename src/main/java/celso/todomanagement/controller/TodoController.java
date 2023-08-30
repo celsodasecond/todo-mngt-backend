@@ -20,4 +20,11 @@ public class TodoController {
 
         return new ResponseEntity<>(savedTodoDto, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{todoId}")
+    public ResponseEntity<TodoDto> getTodo(@PathVariable Long todoId) {
+        TodoDto foundTodoDto = todoService.getTodo(todoId);
+
+        return ResponseEntity.ok(foundTodoDto);
+    }
 }

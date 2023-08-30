@@ -2,6 +2,7 @@ package celso.todomanagement.service.impl;
 
 import celso.todomanagement.dto.TodoDto;
 import celso.todomanagement.entity.Todo;
+import celso.todomanagement.exception.ResourceNotFoundException;
 import celso.todomanagement.repository.TodoRepository;
 import celso.todomanagement.service.TodoService;
 import lombok.AllArgsConstructor;
@@ -24,5 +25,14 @@ public class TodoServiceImpl implements TodoService {
         todoDto = modelMapper.map(savedTodo, TodoDto.class);
 
         return todoDto;
+    }
+
+    @Override
+    public TodoDto getTodo(Long todoId) {
+        Todo todo = todoRepository
+                .findById(todoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Todo not found with id: " + todoId));
+
+        return modelMapper.map(todo, TodoDto.class);
     }
 }
