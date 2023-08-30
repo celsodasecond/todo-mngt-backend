@@ -13,7 +13,10 @@ project also utilized [Model Mapper](https://modelmapper.org/getting-started/) t
 
 ### API Endpoint
 
-####    
+#### Todos
+
+- **@POST: /api/todos/add**: add a todo with fields "title", "description", and "completed" required.
+- 
 
 ### Dependencies
 
