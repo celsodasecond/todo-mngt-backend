@@ -21,6 +21,10 @@ project also utilized [Model Mapper](https://modelmapper.org/getting-started/) t
 - **@PUT: /api/todos/{todoId}**: update specific todo by id.
 - **@PATCH: /api/todos/{todoId}**: updates the 'completed' status of the todo/task.
 
+#### Authentication
+- **/login**
+- **/logout**
+
 ### Dependencies
 
 Check for **___pom.xml___** file.
