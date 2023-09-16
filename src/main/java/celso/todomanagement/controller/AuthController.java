@@ -1,5 +1,6 @@
 package celso.todomanagement.controller;
 
+import celso.todomanagement.dto.LoginDto;
 import celso.todomanagement.dto.RegisterDto;
 import celso.todomanagement.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -17,5 +18,11 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         String response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+        String response = authService.login(loginDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

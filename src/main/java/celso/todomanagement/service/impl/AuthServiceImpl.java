@@ -1,5 +1,6 @@
 package celso.todomanagement.service.impl;
 
+import celso.todomanagement.dto.LoginDto;
 import celso.todomanagement.dto.RegisterDto;
 import celso.todomanagement.entity.Role;
 import celso.todomanagement.entity.User;
@@ -9,6 +10,10 @@ import celso.todomanagement.repository.UserRepository;
 import celso.todomanagement.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +26,9 @@ public class AuthServiceImpl implements AuthService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+
+    // This one is important for login implementation.
+    private AuthenticationManager authenticationManager;
 
     @Override
     public String register(RegisterDto registerDto) {
@@ -49,5 +57,18 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
 
         return "User has been successfully registered";
+    }
+
+    @Override
+    public String login(LoginDto loginDto) {
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginDto.getUsernameOrEmail(),
+                loginDto.getPassword()
+        ));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return "User has been successfully logged in";
     }
 }
