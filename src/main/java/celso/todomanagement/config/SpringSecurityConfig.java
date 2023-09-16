@@ -48,6 +48,8 @@ public class SpringSecurityConfig {
                     // PUBLIC ACCESS APIs - Does not need Auth
                     // authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
 
+                    // FOR AUTH REGISTRATION AND LOGIN
+                    authorize.requestMatchers("/api/auth/**").permitAll();
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
 
