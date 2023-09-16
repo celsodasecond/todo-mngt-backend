@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.beans.factory.annotation.Value;
 
 @Setter
@@ -21,6 +22,5 @@ public class Todo {
     private String title;
     @Column(nullable = false)
     private String description;
-    @Column(columnDefinition = "boolean default false")
-    private Boolean completed;
+    private Boolean completed = false;
 }
