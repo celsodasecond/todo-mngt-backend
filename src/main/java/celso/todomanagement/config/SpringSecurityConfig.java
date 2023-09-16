@@ -1,9 +1,12 @@
 package celso.todomanagement.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -16,8 +19,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableMethodSecurity
+@AllArgsConstructor
 public class SpringSecurityConfig {
+    // Automatically uses CustomUserDetailsService logic
+    // This is needed in DAO Authentication
+    private UserDetailsService userDetailsService;
 
+    // This is needed in DAO Authentication
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -47,20 +55,26 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-
-        UserDetails celso = User.builder()
-                .username("celso")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(celso, admin);
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
+
+    // DISABLED - BECAUSE THIS WAS ONLY USED IN IN-MEMORY AUTH. CREDENTIALS ARE NOW STORED IN DB
+    //@Bean
+    //public UserDetailsService userDetailsService() {
+    //
+    //    UserDetails celso = User.builder()
+    //            .username("celso")
+    //            .password(passwordEncoder().encode("password"))
+    //            .roles("USER")
+    //            .build();
+    //
+    //    UserDetails admin = User.builder()
+    //            .username("admin")
+    //            .password(passwordEncoder().encode("admin"))
+    //            .roles("ADMIN")
+    //            .build();
+    //
+    //    return new InMemoryUserDetailsManager(celso, admin);
+    //}
 }
