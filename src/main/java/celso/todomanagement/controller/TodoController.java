@@ -5,6 +5,7 @@ import celso.todomanagement.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class TodoController {
     private TodoService todoService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<TodoDto> addTodo(@RequestBody TodoDto todoDto) {
         TodoDto savedTodoDto = todoService.addTodo(todoDto);
@@ -23,6 +25,7 @@ public class TodoController {
         return new ResponseEntity<>(savedTodoDto, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{todoId}")
     public ResponseEntity<TodoDto> getTodo(@PathVariable Long todoId) {
         TodoDto foundTodoDto = todoService.getTodo(todoId);
@@ -30,6 +33,7 @@ public class TodoController {
         return ResponseEntity.ok(foundTodoDto);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<List<TodoDto>> getAllTodo() {
         List<TodoDto> todoDtos = todoService.getAllTodo();
@@ -37,13 +41,14 @@ public class TodoController {
         return ResponseEntity.ok(todoDtos);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{todoId}")
     public ResponseEntity<TodoDto> updateTodo(@RequestBody TodoDto todoDto, @PathVariable Long todoId) {
         TodoDto updatedTodoDto = todoService.updateTodo(todoDto, todoId);
 
         return ResponseEntity.ok(updatedTodoDto);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{todoId}")
     public ResponseEntity<String> deleteTodo(@PathVariable Long todoId) {
         todoService.deleteTodo(todoId);
@@ -51,6 +56,7 @@ public class TodoController {
         return ResponseEntity.ok("Todo has been successfully deleted.");
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PatchMapping("/{todoId}")
     public ResponseEntity<TodoDto> triggerTodoComplete(@PathVariable Long todoId) {
         TodoDto todoDto = todoService.triggerCompleteTodo(todoId);
