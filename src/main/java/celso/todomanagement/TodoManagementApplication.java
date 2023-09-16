@@ -12,7 +12,6 @@ public class TodoManagementApplication {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(TodoManagementApplication.class, args);
 	}
