@@ -2,6 +2,7 @@ package celso.todomanagement.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -24,6 +25,18 @@ public class SpringSecurityConfig {
 
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) -> {
+                    // ADMIN
+                    authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
+
+                    // USERS
+                    authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");
+                    authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN", "USER");
+
+                    // PUBLIC ACCESS APIs - Does not need Auth
+                    // authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
+
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
 
